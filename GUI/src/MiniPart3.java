@@ -29,7 +29,7 @@ public class MiniPart3 extends JPanel{
 		north[1].addActionListener(new Listener5());
 		north[2].addActionListener(new Listener6());
 		southLabel = new JLabel("What is 10 - 6?");
-		southLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
+		southLabel.setFont(new Font("Times New Roman", Font.ITALIC, 24));
 		southLabel.setForeground(Color.BLUE);
 		southPanel.add(southLabel);
 		add(southPanel, BorderLayout.SOUTH);
