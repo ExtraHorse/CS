@@ -6,6 +6,7 @@ import javax.swing.*;
 public class panel02 extends JPanel{
 	private JButton top, left, center, right, bottom;
 	private ImageIcon pic;
+	private JTextField bottomText;
 	public panel02() {
 		setLayout(new BorderLayout());
 		//top button
@@ -43,6 +44,25 @@ public class panel02 extends JPanel{
 		bottom.setBackground(Color.green);
 		bottom.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		bottom.addActionListener(new Listener());
+		//south text
+		bottomText = new JTextField(240);
+		bottomText.setText("Before Enter Pressed");
+		bottom.add(bottomText);
+		bottomText.addActionListener(new Listener2());
+	}
+	private class Listener2 implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			top.setBackground(Color.WHITE);
+			left.setBackground(Color.WHITE);
+			right.setBackground(Color.WHITE);
+			bottom.setBackground(Color.WHITE);
+			bottomText.setText("Enter Pressed");
+			top.setText("OH NO");
+			left.setText("this is very bad");
+			center.setIcon(new ImageIcon("C:/Users/Zachary Wang/git/CS/GUI/src/tragedy.jpg"));
+			right.setText("abosolute disaster");
+			bottom.setText("can do better");
+		}
 	}
 	
 	private class Listener implements ActionListener{
