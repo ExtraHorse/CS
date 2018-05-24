@@ -32,7 +32,7 @@ public class FourButtons extends JPanel {
 			if(e.getSource() == redButton)
 				setBackground(Color.RED);
 			if(e.getSource() == greenButton)
-				setBackground(Color.GREEN);
+				setBackground(Color.green);
 			if(e.getSource() == blueButton)
 				setBackground(Color.BLUE);
 			if(e.getSource() == grayButton)
