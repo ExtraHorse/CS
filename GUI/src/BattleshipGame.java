@@ -12,6 +12,7 @@ public class BattleshipGame extends JPanel {
 		setLayout(new GridLayout(2, 1));
 		add(enemy);
 		add(player);
+		enemy.addLis
 	}
 	public static void main(String[] args) {
 		JFrame enemyframe = new JFrame("Battleship!");
@@ -19,5 +20,11 @@ public class BattleshipGame extends JPanel {
 		enemyframe.setLocation(200, 0);
 		enemyframe.setContentPane(new BattleshipGame());
 		enemyframe.setVisible(true);
+	}
+	
+	private class turnManager implements ComponentListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
 	}
 }
