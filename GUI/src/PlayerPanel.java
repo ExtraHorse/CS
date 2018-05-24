@@ -1,18 +1,15 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
-import javax.swing.*;
-
-public class BattleShip extends JPanel {
-	private boardSpace[][] board;
+public class PlayerPanel extends JPanel {
+	private PlayerSpace[][] board;
 	private int hits, torpedoes;
 	private JLabel label;
-	private JButton reset;
 	static Ship[] fleet = { new Ship(4, "Battleship"), new Ship(3, "Destroyer"), new Ship(3, "Submarine"),
 			new Ship(2, "Patrol Boat") };
 
-	public BattleShip() {
+	public PlayerPanel() {
 		setLayout(new BorderLayout());
 		hits = 0;
 		torpedoes = 80;
@@ -25,17 +22,13 @@ public class BattleShip extends JPanel {
 		JPanel center = new JPanel();
 		center.setLayout(new GridLayout(20, 20));
 		add(center, BorderLayout.CENTER);
-		board = new boardSpace[20][20];
+		board = new PlayerSpace[20][20];
 		for (int r = 0; r < 20; r++)
 			for (int c = 0; c < 20; c++) {
-				board[r][c] = new boardSpace();
+				board[r][c] = new PlayerSpace();
 				board[r][c].addActionListener(new Handler1(r, c));
 				center.add(board[r][c]);
 			}
-		reset = new JButton("Reset");
-		reset.addActionListener(new Handler2());
-		reset.setEnabled(false);
-		add(reset, BorderLayout.SOUTH);
 		placeAll();
 	}
 
@@ -115,9 +108,8 @@ public class BattleShip extends JPanel {
 			label.setText("You Win!");
 		else
 			label.setText("You lose. Try again?");
-		reset.setEnabled(true);
-		for (boardSpace[] row : board)
-			for (boardSpace space : row)
+		for (PlayerSpace[] row : board)
+			for (PlayerSpace space : row)
 				space.end();
 	}
 
@@ -163,13 +155,12 @@ public class BattleShip extends JPanel {
 	// Handling the Reset button
 	public class Handler2 implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			for (boardSpace[] row : board)
-				for (boardSpace space : row)
+			for (PlayerSpace[] row : board)
+				for (PlayerSpace space : row)
 					space.reset();
 			torpedoes = 80;
 			hits = 0;
 			label.setText("You have 80 torpedoes");
-			reset.setEnabled(false);	
 			for(Ship s: fleet) {
 				s.reset();
 			}
