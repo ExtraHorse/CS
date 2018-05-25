@@ -59,13 +59,13 @@ public class PlayerPanel extends JPanel {
 			c = (int)(Math.random() * (board[0].length - 3)) + 1;
 			System.out.println("Attempted Placement for Player Ship: " + r + " " + c);
 			ArrayList<Integer> posOrientations = new ArrayList<Integer>();
-			if (board.length - r > s.getLength() + 2)
+			if (board.length - r > s.getLength() + 1)
 				posOrientations.add(1);
-			if (r > s.getLength() + 1)
+			if (r > s.getLength())
 				posOrientations.add(3);
-			if (board[0].length - c > s.getLength() + 2)
+			if (board[0].length - c > s.getLength() + 1)
 				posOrientations.add(2);
-			if (c > s.getLength() + 1)
+			if (c > s.getLength())
 				posOrientations.add(4);
 			orientation = posOrientations.get((int) (Math.random() * posOrientations.size()));
 			System.out.println(orientation);
@@ -240,6 +240,7 @@ public class PlayerPanel extends JPanel {
 		for (Ship s : fleet) {
 			s.reset();
 		}
+		gameEnd = false;
 		placeAll();
 		// actionPerformed of Handler2
 	}

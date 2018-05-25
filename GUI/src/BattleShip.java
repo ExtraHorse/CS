@@ -57,13 +57,13 @@ public class BattleShip extends JPanel {
 			c = (int)(Math.random() * (board[0].length - 3)) + 1;
 			System.out.println("Attempted Placement for enemy Ship: " + r + " " + c);
 			ArrayList<Integer> posOrientations = new ArrayList<Integer>();
-			if (board.length - r > s.getLength() + 2)
+			if (board.length - r > s.getLength() + 1)
 				posOrientations.add(1);
-			if (r > s.getLength() + 1)
+			if (r > s.getLength())
 				posOrientations.add(3);
-			if (board[0].length - c > s.getLength() + 2)
+			if (board[0].length - c > s.getLength() + 1)
 				posOrientations.add(2);
-			if (c > s.getLength() + 1)
+			if (c > s.getLength())
 				posOrientations.add(4);
 			orientation = posOrientations.get((int) (Math.random() * posOrientations.size()));
 			System.out.println(orientation);
@@ -139,10 +139,6 @@ public class BattleShip extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			// The following two statements are for debugging purpose
-			if(playerBoard.gameEnd) {
-				endGame();
-				return;
-			}
 			boolean sank = false;
 			System.out.println(myRow);
 			System.out.println(myCol);
@@ -172,6 +168,10 @@ public class BattleShip extends JPanel {
 				return;
 			}
 			playerBoard.computerAction();
+			if (playerBoard.gameEnd) {
+				endGame();
+				return;
+			}
 		} // actionPerformed of Handler
 	}
 
