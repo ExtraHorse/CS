@@ -53,36 +53,36 @@ public class BattleShip extends JPanel {
 		int orientation; // 1 = down, 2 = right, 3 = up, 4 = left
 		int r, c;
 		while (!added) { //Find and Test possible placements
-			r = (int)(Math.random() * (board.length - 3)) + 1;
-			c = (int)(Math.random() * (board[0].length - 3)) + 1;
+			r = (int)(Math.random() * (board.length - 2));
+			c = (int)(Math.random() * (board[0].length - 2));
 			System.out.println("Attempted Placement for enemy Ship: " + r + " " + c);
 			ArrayList<Integer> posOrientations = new ArrayList<Integer>();
-			if (board.length - r > s.getLength() + 1)
+			if (board.length - r > s.getLength())
 				posOrientations.add(1);
-			if (r > s.getLength())
+			if (r > s.getLength() - 1)
 				posOrientations.add(3);
-			if (board[0].length - c > s.getLength() + 1)
+			if (board[0].length - c > s.getLength())
 				posOrientations.add(2);
-			if (c > s.getLength())
+			if (c > s.getLength() - 1)
 				posOrientations.add(4);
 			orientation = posOrientations.get((int) (Math.random() * posOrientations.size()));
 			System.out.println(orientation);
 			int occupied = 0;
 			if (orientation == 1) {
 				for (int x = r; x < r + s.getLength(); x++)
-					if (board[x][c].shipPresent() || board[x][c + 1].shipPresent() || board[x][c - 1].shipPresent() || board[r - 1][c].shipPresent() || board[r + s.getLength()][c].shipPresent())
+					if (board[x][c].shipPresent() || board[x][Math.min(board[0].length - 1, c + 1)].shipPresent() || board[x][Math.max(c - 1, 0)].shipPresent() || board[Math.max(0, r - 1)][c].shipPresent() || board[Math.min(board.length - 1, r + s.getLength())][c].shipPresent())
 						occupied++;
 			} else if (orientation == 2) {
 				for (int x = c; x < c + s.getLength(); x++)
-					if (board[r][x].shipPresent() || board[r + 1][x].shipPresent() || board[r - 1][x].shipPresent() || board[r][c - 1].shipPresent() || board[r][c + s.getLength()].shipPresent())
+					if (board[r][x].shipPresent() || board[Math.min(board.length - 1, r + 1)][x].shipPresent() || board[Math.max(r - 1, 0)][x].shipPresent() || board[r][Math.max(0, c - 1)].shipPresent() || board[r][Math.min(board[0].length - 1, c + s.getLength())].shipPresent())
 						occupied++;
 			} else if (orientation == 3) {
 				for (int x = r; x > r - s.getLength(); x--)
-					if (board[x][c].shipPresent() || board[x][c + 1].shipPresent() || board[x][c - 1].shipPresent() || board[r + 1][c].shipPresent() || board[r - s.getLength()][c].shipPresent())
+					if (board[x][c].shipPresent() || board[x][Math.min(board[0].length - 1, c + 1)].shipPresent() || board[x][Math.max(c - 1, 0)].shipPresent() || board[r + 1][c].shipPresent() || board[Math.max(0,r - s.getLength())][c].shipPresent())
 						occupied++;
 			} else if (orientation == 4) {
 				for (int x = c; x > c - s.getLength(); x--)
-					if (board[r][x].shipPresent() || board[r + 1][x].shipPresent() || board[r - 1][x].shipPresent() || board[r][c + 1].shipPresent() || board[r][c - s.getLength()].shipPresent())
+					if (board[r][x].shipPresent() || board[Math.min(board.length - 1, r + 1)][x].shipPresent() || board[Math.max(r - 1, 0)][x].shipPresent() || board[r][c + 1].shipPresent() || board[r][Math.max(0, c - s.getLength())].shipPresent())
 						occupied++;
 			}
 			if (occupied == 0) {//place the ship if possible

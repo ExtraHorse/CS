@@ -15,7 +15,7 @@ public class BattleshipGame extends JPanel {
 	}
 	public static void main(String[] args) {
 		JFrame enemyframe = new JFrame("Battleship!");
-		enemyframe.setSize(800, 1000);
+		enemyframe.setSize(500, 1000);
 		enemyframe.setLocation(200, 0);
 		enemyframe.setContentPane(new BattleshipGame());
 		enemyframe.setVisible(true);
