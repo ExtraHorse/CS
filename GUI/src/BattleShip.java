@@ -17,7 +17,7 @@ public class BattleShip extends JPanel {
 		playerBoard = p;
 		setLayout(new BorderLayout());
 		hits = 0;
-		torpedoes = 80;
+		torpedoes = 60;
 		JPanel north = new JPanel();
 		north.setLayout(new FlowLayout());
 		add(north, BorderLayout.NORTH);
@@ -25,11 +25,11 @@ public class BattleShip extends JPanel {
 		north.add(label);
 
 		JPanel center = new JPanel();
-		center.setLayout(new GridLayout(20, 20));
+		center.setLayout(new GridLayout(10, 10));
 		add(center, BorderLayout.CENTER);
-		board = new boardSpace[20][20];
-		for (int r = 0; r < 20; r++)
-			for (int c = 0; c < 20; c++) {
+		board = new boardSpace[10][10];
+		for (int r = 0; r < 10; r++)
+			for (int c = 0; c < 10; c++) {
 				board[r][c] = new boardSpace();
 				board[r][c].addActionListener(new Handler1(r, c));
 				center.add(board[r][c]);
@@ -55,7 +55,7 @@ public class BattleShip extends JPanel {
 		while (!added) { //Find and Test possible placements
 			r = (int)(Math.random() * (board.length - 3)) + 1;
 			c = (int)(Math.random() * (board[0].length - 3)) + 1;
-			System.out.println("Attempted Placement: " + r + " " + c);
+			System.out.println("Attempted Placement for enemy Ship: " + r + " " + c);
 			ArrayList<Integer> posOrientations = new ArrayList<Integer>();
 			if (board.length - r > s.getLength() + 2)
 				posOrientations.add(1);
@@ -78,11 +78,11 @@ public class BattleShip extends JPanel {
 						occupied++;
 			} else if (orientation == 3) {
 				for (int x = r; x > r - s.getLength(); x--)
-					if (board[x][c].shipPresent() || board[x][c + 1].shipPresent() || board[x][c - 1].shipPresent() || board[r - 1][c].shipPresent() || board[r - s.getLength()][c].shipPresent())
+					if (board[x][c].shipPresent() || board[x][c + 1].shipPresent() || board[x][c - 1].shipPresent() || board[r + 1][c].shipPresent() || board[r - s.getLength()][c].shipPresent())
 						occupied++;
 			} else if (orientation == 4) {
 				for (int x = c; x > c - s.getLength(); x--)
-					if (board[r][x].shipPresent() || board[r + 1][x].shipPresent() || board[r - 1][x].shipPresent() || board[r][c - 1].shipPresent() || board[r][c - s.getLength()].shipPresent())
+					if (board[r][x].shipPresent() || board[r + 1][x].shipPresent() || board[r - 1][x].shipPresent() || board[r][c + 1].shipPresent() || board[r][c - s.getLength()].shipPresent())
 						occupied++;
 			}
 			if (occupied == 0) {//place the ship if possible
@@ -119,8 +119,10 @@ public class BattleShip extends JPanel {
 	private void endGame() {
 		if (hits == 12)
 			label.setText("You Win!");
-		else
+		else if (playerBoard.getHits() == 12)
 			label.setText("You lose. Try again?");
+		else
+			label.setText("Draw. Try again?");
 		reset.setEnabled(true);
 		for (boardSpace[] row : board)
 			for (boardSpace space : row)
@@ -137,6 +139,10 @@ public class BattleShip extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			// The following two statements are for debugging purpose
+			if(playerBoard.gameEnd) {
+				endGame();
+				return;
+			}
 			boolean sank = false;
 			System.out.println(myRow);
 			System.out.println(myCol);
@@ -161,7 +167,7 @@ public class BattleShip extends JPanel {
 			label.setText("You have " + torpedoes + " torpedoes.");
 			if(sank)
 				label.setText("You sank the " + board[myRow][myCol].getShip().getName());
-			if (hits == 12 || torpedoes == 0) {
+			if (hits == 12 || torpedoes == 0 || playerBoard.gameEnd) {
 				endGame();
 				return;
 			}
@@ -175,9 +181,9 @@ public class BattleShip extends JPanel {
 			for (boardSpace[] row : board)
 				for (boardSpace space : row)
 					space.reset();
-			torpedoes = 80;
+			torpedoes = 60;
 			hits = 0;
-			label.setText("You have 80 torpedoes");
+			label.setText("You have " + torpedoes+ " torpedoes");
 			reset.setEnabled(true);	
 			for(Ship s: fleet) {
 				s.reset();

@@ -21,7 +21,7 @@ public class PlayerPanel extends JPanel {
 		guess = new ArrayList<Coord>();
 		possibleGuess = new ArrayList<Coord>();
 		hits = 0;
-		torpedoes = 80;
+		torpedoes = 60;
 		JPanel north = new JPanel();
 		north.setLayout(new FlowLayout());
 		add(north, BorderLayout.NORTH);
@@ -31,11 +31,11 @@ public class PlayerPanel extends JPanel {
 		gameEnd = false;
 		
 		JPanel center = new JPanel();
-		center.setLayout(new GridLayout(20, 20));
+		center.setLayout(new GridLayout(10, 10));
 		add(center, BorderLayout.CENTER);
-		board = new PlayerSpace[20][20];
-		for (int r = 0; r < 20; r++)
-			for (int c = 0; c < 20; c++) {
+		board = new PlayerSpace[10][10];
+		for (int r = 0; r < 10; r++)
+			for (int c = 0; c < 10; c++) {
 				board[r][c] = new PlayerSpace();
 				center.add(board[r][c]);
 			}
@@ -47,6 +47,9 @@ public class PlayerPanel extends JPanel {
 			placeShip(s);
 	}
 
+	public int getHits() { return hits;}
+	public int getTorpedoes() {return torpedoes;}
+	
 	private void placeShip(Ship s) {
 		boolean added = false;
 		int orientation; // 1 = down, 2 = right, 3 = up, 4 = left
@@ -54,7 +57,7 @@ public class PlayerPanel extends JPanel {
 		while (!added) { // Find and Test possible placements
 			r = (int)(Math.random() * (board.length - 3)) + 1;
 			c = (int)(Math.random() * (board[0].length - 3)) + 1;
-			System.out.println("Attempted Placement: " + r + " " + c);
+			System.out.println("Attempted Placement for Player Ship: " + r + " " + c);
 			ArrayList<Integer> posOrientations = new ArrayList<Integer>();
 			if (board.length - r > s.getLength() + 2)
 				posOrientations.add(1);
@@ -117,6 +120,7 @@ public class PlayerPanel extends JPanel {
 
 	private void endGame() {
 		label.setText("");
+		gameEnd = true;
 	}
 
 	public void removeAll(ArrayList<Coord> a) {
@@ -132,16 +136,16 @@ public class PlayerPanel extends JPanel {
 				possibleGuess.remove(lastGuessUsed);
 			else if(guess.size() == 1) {
 				if (guess.get(guess.size() - 1).x > 0
-						&& !board[guess.get(guess.size() - 1).x - 1][guess.get(guess.size() - 1).y].hitOnce())
+						&& !board[guess.get(guess.size() - 1).y][guess.get(guess.size() - 1).x - 1].hitOnce())
 					possibleGuess.add(new Coord(guess.get(guess.size() - 1).x - 1, guess.get(guess.size() - 1).y));
 				if (guess.get(guess.size() - 1).x < board[0].length - 1
-						&& !board[guess.get(guess.size() - 1).x + 1][guess.get(guess.size() - 1).y].hitOnce())
+						&& !board[guess.get(guess.size() - 1).y][guess.get(guess.size() - 1).x + 1].hitOnce())
 					possibleGuess.add(new Coord(guess.get(guess.size() - 1).x + 1, guess.get(guess.size() - 1).y));
 				if (guess.get(guess.size() - 1).y > 0
-						&& !board[guess.get(guess.size() - 1).x][guess.get(guess.size() - 1).y - 1].hitOnce())
+						&& !board[guess.get(guess.size() - 1).y - 1][guess.get(guess.size() - 1).x].hitOnce())
 					possibleGuess.add(new Coord(guess.get(guess.size() - 1).x, guess.get(guess.size() - 1).y - 1));
 				if (guess.get(guess.size() - 1).y < board.length - 1
-						&& !board[guess.get(guess.size() - 1).x][guess.get(guess.size() - 1).y + 1].hitOnce())
+						&& !board[guess.get(guess.size() - 1).y + 1][guess.get(guess.size() - 1).x].hitOnce())
 					possibleGuess.add(new Coord(guess.get(guess.size() - 1).x, guess.get(guess.size() - 1).y + 1));
 			} else if (previousHit) {
 				removeAll(possibleGuess);
@@ -151,27 +155,27 @@ public class PlayerPanel extends JPanel {
 				int lastY = guess.get(guess.size() - 1).y;
 				if(firstX == lastX) {		
 					if(firstY < lastY) {
-						if(firstY > 0 && !board[firstX][firstY - 1].hitOnce())
+						if(firstY > 0 && !board[firstY - 1][firstX].hitOnce())
 							possibleGuess.add(new Coord(firstX, firstY - 1));
-						if(lastY < board.length - 1 && !board[firstX][lastY + 1].hitOnce())
+						if(lastY < board.length - 1 && !board[lastY + 1][firstX].hitOnce())
 							possibleGuess.add(new Coord(firstX, lastY + 1));
 					} else {
-						if(lastY > 0 && !board[firstX][lastY - 1].hitOnce())
+						if(lastY > 0 && !board[lastY - 1][firstX].hitOnce())
 							possibleGuess.add(new Coord(firstX, lastY - 1));
-						if(firstY < board.length - 1 && !board[firstX][firstY + 1].hitOnce())
+						if(firstY < board.length - 1 && !board[firstY + 1][firstX].hitOnce())
 							possibleGuess.add(new Coord(firstX, firstY + 1));
 					}
 				} else {
 					if(firstX < lastX) {
-						if(firstX > 0 && !board[firstX - 1][firstY].hitOnce())
+						if(firstX > 0 && !board[firstY][firstX - 1].hitOnce())
 							possibleGuess.add(new Coord(firstX - 1, firstY));
-						if(lastX < board.length - 1 && !board[lastX + 1][firstY].hitOnce())
+						if(lastX < board.length - 1 && !board[firstY][lastX + 1].hitOnce())
 							possibleGuess.add(new Coord(lastX + 1, firstY));
 					} else {
-						if(lastX > 0 && !board[lastX - 1][firstY].hitOnce())
-							possibleGuess.add(new Coord(lastY - 1, firstY));
-						if(firstX < board.length - 1 && !board[firstX + 1][firstY].hitOnce())
-							possibleGuess.add(new Coord(firstY + 1, firstY));
+						if(lastX > 0 && !board[firstY][lastX - 1].hitOnce())
+							possibleGuess.add(new Coord(lastX - 1, firstY));
+						if(firstX < board.length - 1 && !board[firstY][firstX + 1].hitOnce())
+							possibleGuess.add(new Coord(firstX + 1, firstY));
 					}
 				}		
 			}
@@ -180,8 +184,8 @@ public class PlayerPanel extends JPanel {
 			lastGuessUsed = (int)(Math.random() * possibleGuess.size());
 			Coord selected = possibleGuess.get(lastGuessUsed);
 			System.out.println(selected);
-			myRow = selected.x;
-			myCol = selected.y;
+			myRow = selected.y;
+			myCol = selected.x;
 		} else {
 			while (!eligible) {
 				myRow = (int) (Math.random() * board.length);
@@ -194,7 +198,7 @@ public class PlayerPanel extends JPanel {
 		if (board[myRow][myCol].shipPresent()) {
 			hits++;
 			torpedoes--;
-			guess.add(new Coord(myRow, myCol));
+			guess.add(new Coord(myCol, myRow));
 			previousHit = true;
 			for (Coord c : board[myRow][myCol].getShip().getCoordinates()) {
 				if (c.x == myRow && c.y == myCol) {
@@ -230,9 +234,9 @@ public class PlayerPanel extends JPanel {
 				space.reset();
 		removeAll(guess);
 		removeAll(possibleGuess);
-		torpedoes = 80;
+		torpedoes = 60;
 		hits = 0;
-		label.setText("You have 80 torpedoes");
+		label.setText("You have " + torpedoes + " torpedoes.");
 		for (Ship s : fleet) {
 			s.reset();
 		}
