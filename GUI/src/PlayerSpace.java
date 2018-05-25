@@ -2,8 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class PlayerSpace extends JButton{
-	private boolean shipPresent;
-	private boolean shipSunk;
+	private boolean shipPresent, shipSunk, hitOnce;
 	private Ship ship;
 
 	public PlayerSpace() {
@@ -12,31 +11,29 @@ public class PlayerSpace extends JButton{
 			setBackground(Color.WHITE);
 			shipSunk = false;
 			setEnabled(false);
+			hitOnce = false;
 		}
 
 	public void setShip(Ship s) {
 		shipPresent = true;
 		ship = s;
+		setBackground(Color.gray);
 	}
 
-	public boolean shipPresent() {
-		return shipPresent;
-	}
+	public boolean shipPresent() {return shipPresent;}
 
-	public boolean shipSunk() {
-		return shipSunk;
-	}
+	public boolean shipSunk() {return shipSunk;}
 
-	public Ship getShip() {
-		return ship;
-	}
+	public Ship getShip() {return ship;}
+	
+	public boolean hitOnce() {return hitOnce;}
 
 	public void hit() {
 		if (shipPresent)
 			setBackground(Color.red);
 		else
-			setBackground(Color.WHITE);
-		setEnabled(false);
+			setBackground(Color.yellow);
+		hitOnce = true;
 	}
 
 	public void sinkShip() {
@@ -53,10 +50,11 @@ public class PlayerSpace extends JButton{
 	}
 
 	public void reset() {
-		setBackground(Color.blue);
-		setEnabled(true);
+		setBackground(Color.WHITE);
+		setEnabled(false);
 		shipPresent = false;
 		shipSunk = false;
+		hitOnce = false;
 	}
 
 }

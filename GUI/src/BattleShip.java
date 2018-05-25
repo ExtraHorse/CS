@@ -11,8 +11,10 @@ public class BattleShip extends JPanel {
 	private JButton reset;
 	static Ship[] fleet = { new Ship(4, "Battleship"), new Ship(3, "Destroyer"), new Ship(3, "Submarine"),
 			new Ship(2, "Patrol Boat") };
-
-	public BattleShip() {
+	private PlayerPanel playerBoard;
+	
+	public BattleShip(PlayerPanel p) {
+		playerBoard = p;
 		setLayout(new BorderLayout());
 		hits = 0;
 		torpedoes = 80;
@@ -34,11 +36,13 @@ public class BattleShip extends JPanel {
 			}
 		reset = new JButton("Reset");
 		reset.addActionListener(new Handler2());
-		reset.setEnabled(false);
+		reset.setEnabled(true);
 		add(reset, BorderLayout.SOUTH);
 		placeAll();
 	}
 
+	
+	
 	private void placeAll() {
 		for (Ship s : fleet)
 			placeShip(s);
@@ -49,34 +53,36 @@ public class BattleShip extends JPanel {
 		int orientation; // 1 = down, 2 = right, 3 = up, 4 = left
 		int r, c;
 		while (!added) { //Find and Test possible placements
-			r = (int) (Math.random() * board.length);
-			c = (int) (Math.random() * board[0].length);
+			r = (int)(Math.random() * (board.length - 3)) + 1;
+			c = (int)(Math.random() * (board[0].length - 3)) + 1;
+			System.out.println("Attempted Placement: " + r + " " + c);
 			ArrayList<Integer> posOrientations = new ArrayList<Integer>();
-			if (board.length - r - 1 > s.getLength() - 1)
+			if (board.length - r > s.getLength() + 2)
 				posOrientations.add(1);
-			if (r > s.getLength() - 1)
+			if (r > s.getLength() + 1)
 				posOrientations.add(3);
-			if (board[0].length - c - 1 > s.getLength() - 1)
+			if (board[0].length - c > s.getLength() + 2)
 				posOrientations.add(2);
-			if (c > s.getLength() - 1)
+			if (c > s.getLength() + 1)
 				posOrientations.add(4);
 			orientation = posOrientations.get((int) (Math.random() * posOrientations.size()));
+			System.out.println(orientation);
 			int occupied = 0;
 			if (orientation == 1) {
 				for (int x = r; x < r + s.getLength(); x++)
-					if (board[x][c].shipPresent())
+					if (board[x][c].shipPresent() || board[x][c + 1].shipPresent() || board[x][c - 1].shipPresent() || board[r - 1][c].shipPresent() || board[r + s.getLength()][c].shipPresent())
 						occupied++;
 			} else if (orientation == 2) {
 				for (int x = c; x < c + s.getLength(); x++)
-					if (board[x][c].shipPresent())
+					if (board[r][x].shipPresent() || board[r + 1][x].shipPresent() || board[r - 1][x].shipPresent() || board[r][c - 1].shipPresent() || board[r][c + s.getLength()].shipPresent())
 						occupied++;
 			} else if (orientation == 3) {
 				for (int x = r; x > r - s.getLength(); x--)
-					if (board[x][c].shipPresent())
+					if (board[x][c].shipPresent() || board[x][c + 1].shipPresent() || board[x][c - 1].shipPresent() || board[r - 1][c].shipPresent() || board[r - s.getLength()][c].shipPresent())
 						occupied++;
 			} else if (orientation == 4) {
 				for (int x = c; x > c - s.getLength(); x--)
-					if (board[x][c].shipPresent())
+					if (board[r][x].shipPresent() || board[r + 1][x].shipPresent() || board[r - 1][x].shipPresent() || board[r][c - 1].shipPresent() || board[r][c - s.getLength()].shipPresent())
 						occupied++;
 			}
 			if (occupied == 0) {//place the ship if possible
@@ -155,8 +161,11 @@ public class BattleShip extends JPanel {
 			label.setText("You have " + torpedoes + " torpedoes.");
 			if(sank)
 				label.setText("You sank the " + board[myRow][myCol].getShip().getName());
-			if (hits == 12 || torpedoes == 0)
+			if (hits == 12 || torpedoes == 0) {
 				endGame();
+				return;
+			}
+			playerBoard.computerAction();
 		} // actionPerformed of Handler
 	}
 
@@ -169,11 +178,12 @@ public class BattleShip extends JPanel {
 			torpedoes = 80;
 			hits = 0;
 			label.setText("You have 80 torpedoes");
-			reset.setEnabled(false);	
+			reset.setEnabled(true);	
 			for(Ship s: fleet) {
 				s.reset();
 			}
 			placeAll();
+			playerBoard.reset();
 		} // actionPerformed of Handler2
 	}
 }

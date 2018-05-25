@@ -6,4 +6,7 @@ public class Coord {
 		this.x = x;
 		this.y = y;
 	}
+	public String toString() {
+		return "X: " + x + " Y: " + y;
+	}
 }

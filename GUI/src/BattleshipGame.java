@@ -3,16 +3,15 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class BattleshipGame extends JPanel {
-	private JPanel enemy;
-	private JPanel player;
+	private BattleShip enemy;
+	private PlayerPanel player;
 	
 	public BattleshipGame() {
-		enemy = new BattleShip();
 		player = new PlayerPanel();
+		enemy = new BattleShip(player);
 		setLayout(new GridLayout(2, 1));
 		add(enemy);
 		add(player);
-		enemy.addLis
 	}
 	public static void main(String[] args) {
 		JFrame enemyframe = new JFrame("Battleship!");
@@ -20,11 +19,7 @@ public class BattleshipGame extends JPanel {
 		enemyframe.setLocation(200, 0);
 		enemyframe.setContentPane(new BattleshipGame());
 		enemyframe.setVisible(true);
+		enemyframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	private class turnManager implements ComponentListener {
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-	}
+
 }
