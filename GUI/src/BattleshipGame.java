@@ -21,5 +21,4 @@ public class BattleshipGame extends JPanel {
 		enemyframe.setVisible(true);
 		enemyframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
 }

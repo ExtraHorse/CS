@@ -190,6 +190,7 @@ public class BattleShip extends JPanel {
 			}
 			placeAll();
 			playerBoard.reset();
+			System.out.println("--------RESET---------");
 		} // actionPerformed of Handler2
 	}
 }

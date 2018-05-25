@@ -12,8 +12,11 @@ public class HelloTextBox extends JPanel {
 		top.setLayout(new FlowLayout());
 		setLayout(new GridLayout(2, 1));
 		box = new JTextField("0.0", 10);
+		box.setHorizontalAlignment(SwingConstants.RIGHT);
 		label = new JLabel("0.0");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		button = new JButton("SQRT");
+		button.addActionListener(new Listener());
 		box.setText("Enter a Number.");
 		label.setText("see the square root");
 		button.setText("Square Root");
@@ -28,7 +31,17 @@ public class HelloTextBox extends JPanel {
 		frame.setContentPane(new HelloTextBox());
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 	}
 
+	private class Listener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			double d = Double.parseDouble(box.getText());
+			if(d < 0) {
+				d *= -1;
+				label.setText("" + Math.sqrt(d) + "i");
+			} else {
+				label.setText("" + Math.sqrt(d));
+			}
+		}
+	}
 }
