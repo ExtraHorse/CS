@@ -1,3 +1,4 @@
+package Battleship;
 import java.awt.*;
 import javax.swing.*;
 

@@ -1,12 +1,11 @@
+package labsOneThroughFour;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 public class MultipleButtons extends JPanel {
 	private JLabel label;
 	private JButton rand, cbrt, recip, quit;
 	private JPanel buttons;
-	private double message;
 	
 	public MultipleButtons() {
 		buttons = new JPanel();
@@ -37,7 +36,7 @@ public class MultipleButtons extends JPanel {
 
 	private class Listener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			message = Double.parseDouble(label.getText());
+			double message = Double.parseDouble(label.getText());
 			if(e.getSource() == rand)
 				label.setText(Math.random() + "");
 			if(e.getSource() == cbrt)

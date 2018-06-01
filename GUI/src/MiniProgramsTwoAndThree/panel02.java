@@ -1,3 +1,4 @@
+package MiniProgramsTwoAndThree;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -10,7 +11,7 @@ public class panel02 extends JPanel{
 	public panel02() {
 		setLayout(new BorderLayout());
 		//top button
-		top = new JButton("oh no");
+		top = new JButton("north");
 		add(top, BorderLayout.NORTH);
 		top.setHorizontalAlignment(SwingConstants.CENTER);
 		top.setBackground(Color.blue);
@@ -18,7 +19,7 @@ public class panel02 extends JPanel{
 		top.setFont(new Font("Comic Sans MS", Font.ITALIC, 24));
 		top.addActionListener(new Listener());
 		//left button
-		left = new JButton("this bad");
+		left = new JButton("west");
 		add(left, BorderLayout.WEST);
 		left.setHorizontalAlignment(SwingConstants.CENTER);
 		left.setBackground(Color.orange);
@@ -30,14 +31,14 @@ public class panel02 extends JPanel{
 		add(center, BorderLayout.CENTER);
 		center.addActionListener(new Listener());
 		//right button
-		right = new JButton("how did this happen");
+		right = new JButton("east");
 		add(right, BorderLayout.EAST);
 		right.setHorizontalAlignment(SwingConstants.CENTER);
 		right.setBackground(Color.red);
 		right.setForeground(Color.cyan);
 		right.addActionListener(new Listener());
 		//bottom button
-		bottom = new JButton("wow");
+		bottom = new JButton("south");
 		add(bottom, BorderLayout.SOUTH);
 		bottom.setHorizontalAlignment(SwingConstants.CENTER);
 		bottom.setForeground(Color.MAGENTA);
@@ -57,26 +58,26 @@ public class panel02 extends JPanel{
 			right.setBackground(Color.WHITE);
 			bottom.setBackground(Color.WHITE);
 			bottomText.setText("Enter Pressed");
-			top.setText("OH NO");
-			left.setText("this is very bad");
+			top.setText("top");
+			left.setText("left");
 			center.setIcon(new ImageIcon("C:/Users/Zachary Wang/git/CS/GUI/src/tragedy.jpg"));
-			right.setText("abosolute disaster");
-			bottom.setText("can do better");
+			right.setText("right");
+			bottom.setText("south");
 		}
 	}
 	
 	private class Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == top)
-				top.setText("OH NO");
+				top.setText("top");
 			if(e.getSource() == left)
-				left.setText("this is very bad");
+				left.setText("left");
 			if(e.getSource() == center)
 				center.setIcon(new ImageIcon("C:/Users/Zachary Wang/git/CS/GUI/src/tragedy.jpg"));
 			if(e.getSource() == right)
-				right.setText("abosolute disaster");
+				right.setText("right");
 			if(e.getSource() == bottom)
-				bottom.setText("can do better");
+				bottom.setText("bottom");
 		}
 	}
 }

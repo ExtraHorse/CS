@@ -1,3 +1,4 @@
+package Battleship;
 
 public class Coord {
 	public int x;

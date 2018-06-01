@@ -1,3 +1,4 @@
+package Battleship;
 import java.awt.Color;
 import javax.swing.*;
 public class boardSpace extends JButton {
