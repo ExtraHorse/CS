@@ -49,8 +49,26 @@ public class Pd5ZacharyWangRationalNum {
 	}
 	
 	public Pd5ZacharyWangRationalNum add(Pd5ZacharyWangRationalNum other) {
-		int addedNumerator = numerator * other.getDenominator() + denominator * other.getNumerator();
-		int addedDenominator = denominator * other.getDenominator();
-		return new Pd5ZacharyWangRationalNum(addedNumerator, addedDenominator);
+		int newNumerator = numerator * other.getDenominator() + denominator * other.getNumerator();
+		int newDenominator = denominator * other.getDenominator();
+		return new Pd5ZacharyWangRationalNum(newNumerator, newDenominator);
+	}
+	
+	public Pd5ZacharyWangRationalNum subtract(Pd5ZacharyWangRationalNum other) {
+		int newNumerator = numerator * other.getDenominator() - denominator * other.getNumerator();
+		int newDenominator = denominator * other.getDenominator();
+		return new Pd5ZacharyWangRationalNum(newNumerator, newDenominator);
+	}
+	
+	public Pd5ZacharyWangRationalNum multiple(Pd5ZacharyWangRationalNum other) {
+		int newNumerator = numerator  * other.getNumerator();
+		int newDenominator = denominator * other.getDenominator();
+		return new Pd5ZacharyWangRationalNum(newNumerator, newDenominator);
+	}
+	
+	public Pd5ZacharyWangRationalNum divide(Pd5ZacharyWangRationalNum other) {
+		int newNumerator = numerator  * other.getDenominator();
+		int newDenominator = denominator * other.getNumerator();
+		return new Pd5ZacharyWangRationalNum(newNumerator, newDenominator);
 	}
 }
