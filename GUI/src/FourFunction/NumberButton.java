@@ -1,4 +1,6 @@
 package FourFunction;
+import java.awt.*;
+
 import javax.swing.*;
 
 public class NumberButton extends JButton {
@@ -6,5 +8,8 @@ public class NumberButton extends JButton {
 	public NumberButton(int v) {
 		super(v + "");
 		val = v;
+		setMinimumSize(new Dimension(0,0));
 	}
+	
+	public int getVal() {return val; }
 }
