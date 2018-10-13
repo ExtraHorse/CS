@@ -201,4 +201,52 @@ public class Pd5ZacharyWangDLL <E>{
 		list.set(2, "Bread");
 		System.out.println(list);
 	}
-}
+}/*Apple
+Banana
+Cucumber
+Dumpling
+Escargot
+
+Size: 5
+Apple
+Banana
+Cucumber
+Escargot
+
+Size: 4
+Removed Dumpling
+Add at 3:   
+Apple
+Banana
+Cucumber
+Cheese
+Escargot
+
+Get values at 1 and first: Banana and Apple
+No change: 
+Apple
+Banana
+Cucumber
+Cheese
+Escargot
+
+Apple is now removed!
+Banana
+Cucumber
+Cheese
+Escargot
+
+Add first:  
+Anchovie
+Banana
+Cucumber
+Cheese
+Escargot
+
+Size: 5
+Set the second:  
+Anchovie
+Bread
+Cucumber
+Cheese
+Escargot*/
