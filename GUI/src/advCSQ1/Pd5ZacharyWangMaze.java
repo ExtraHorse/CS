@@ -1,6 +1,9 @@
 package advCSQ1;
 
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -9,8 +12,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import Battleship.Coord;
+
 public class Pd5ZacharyWangMaze extends JPanel {
+	ListNode<Coord> travelled = new ListNode<Coord>(null, null), temp = travelled;
 	Timer timer;
+	boolean controller = false;
 	JButton[][] GUIGrid;
 	JButton start;
 	int StartX, StartY;
@@ -20,6 +27,7 @@ public class Pd5ZacharyWangMaze extends JPanel {
 			{ 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0 }, { 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1 },
 			{ 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1 }, { 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
+	
 
 	// int [] [] grid = { {1,1,1}, {1,0,1},
 	// {0,0,1} };
@@ -48,13 +56,16 @@ public class Pd5ZacharyWangMaze extends JPanel {
 		System.out.println("Enter start x and y");
 		StartX = input.nextInt();
 		StartY = input.nextInt();
+		timer = new Timer(200, new timeListener());
+		timer.setRepeats(true);
 	}
 
 	// Assumption: the exit is at the bottom right corner of the grid
 	//
 	public boolean findAnExit(int x, int y) {
-		String path = "START: ";
-		return findAnExitHelper(x, y, path);
+		boolean solved = findAnExitHelper(x, y);
+		timer.start();
+		return solved;
 	} // FindAnExit
 
 	private class Listener implements ActionListener {
@@ -67,36 +78,23 @@ public class Pd5ZacharyWangMaze extends JPanel {
 		return grid;
 	}
 
-	public void setButton(int x, int y) {
-		GUIGrid[y][x].setBackground(Color.blue);
-	}
-
-	public boolean findAnExitHelper(int x, int y, String path) {
-		setButton(x, y);
-		int ONE_SECOND = 1000;
-		timer = new Timer(ONE_SECOND, new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				setButton(x, y);
-			}
-		});
-		timer.start();
-		if (x == grid[0].length - 1 && y == grid.length - 1) {
-			System.out.println("true");
-			return true;
+	public boolean findAnExitHelper(int x, int y) {
+		int location;
+		try {
+			location = grid[y][x];
+		} catch(ArrayIndexOutOfBoundsException e) {
+			return false;
 		}
-		if (x > 0 && grid[y][x - 1] == 1 && path.charAt(path.length() - 1) != 'r')
-			if (findAnExitHelper(x - 1, y, path + "l"))
-				return true;
-		if (x < grid[0].length - 1 && grid[y][x + 1] == 1 && path.charAt(path.length() - 1) != 'l')
-			if (findAnExitHelper(x + 1, y, path + "r"))
-				return true;
-		if (y > 0 && grid[y - 1][x] == 1 && path.charAt(path.length() - 1) != 'd')
-			if (findAnExitHelper(x, y - 1, path + "u"))
-				return true;
-		if (y < grid.length - 1 && grid[y + 1][x] == 1 && path.charAt(path.length() - 1) != 'u')
-			if (findAnExitHelper(x, y + 1, path + "d"))
-				return true;
-		return false;
+		if (location == 0 || location == 3)
+			return false;
+		grid[y][x] = 3;
+		temp.setNext(new ListNode<Coord>(new Coord(x, y, 0), null));
+		temp = temp.getNext();
+		return(x == grid[0].length - 1 && y == grid.length - 1 
+				|| findAnExitHelper(x + 1, y) 
+				|| findAnExitHelper(x - 1, y)
+				|| findAnExitHelper(x, y + 1)
+				|| findAnExitHelper(x, y - 1));
 	}
 
 	// findAnExitHelper
@@ -110,6 +108,15 @@ public class Pd5ZacharyWangMaze extends JPanel {
 		}
 		return s;
 	} // toString
+
+	private class timeListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			GUIGrid[travelled.getNext().getValue().y][travelled.getNext().getValue().x].setBackground(Color.blue);
+			travelled = travelled.getNext();
+			if(travelled.getNext() == null)
+				timer.stop();
+		}
+	}
 } // Maze
 
 /********************************
