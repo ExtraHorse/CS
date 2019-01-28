@@ -19,6 +19,7 @@ public class Pd5ZacharyWangPrintQueue {
 
 	public static void main(String[] args) throws Exception {
 		q = new LinkedList<String>();
+		Queue<String> temp = q;
 		in = new Scanner(System.in);
 		String prompt = "Add, Print, Delete, eXit:  ";
 		System.out.print(prompt);
