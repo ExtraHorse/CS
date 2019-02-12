@@ -1,4 +1,4 @@
-package advCSQ1;
+
 
 public interface Polynomial{   
 	   Polynomial plus(Polynomial other);

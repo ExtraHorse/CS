@@ -1,4 +1,4 @@
-package advCSQ1;
+
 
 public class Pd5ZacharyWangRationalNum {
 	private int numerator, denominator;

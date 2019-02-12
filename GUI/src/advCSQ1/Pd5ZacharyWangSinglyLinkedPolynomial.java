@@ -1,4 +1,4 @@
-package advCSQ1;
+
 
 public class Pd5ZacharyWangSinglyLinkedPolynomial implements Polynomial {
 	class ListNode<Term> {

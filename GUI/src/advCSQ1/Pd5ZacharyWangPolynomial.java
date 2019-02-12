@@ -1,4 +1,4 @@
-package advCSQ1;
+
 
 public interface Pd5ZacharyWangPolynomial {
 	int degree();

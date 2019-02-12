@@ -1,4 +1,4 @@
-package advCSQ1;
+
 
 public class Test2 <E>extends Test1{
 	private E var;
