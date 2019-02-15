@@ -1,13 +1,14 @@
-
+package advCSQ1.Semester2Labs;
 
 /*****************************************************************************************************************
-NAME:      
-PERIOD:
-DUE DATE: 
+NAME:  Zachary Wang    
+PERIOD: 5
+DUE DATE: 2/12/2019
 
-PURPOSE:    
+PURPOSE: Implement basic methods for an expression tree.
 
-WHAT I LEARNED:    
+WHAT I LEARNED: Using recursion and similar methods for evaluating a prefix or postfix script (i.e. using a stack and popping and evaluating when an op is encountered),
+a BXT functions remarkably similar to an expression in regular form.
           
 CREDITS (BE SPECIFIC: FRIENDS, PEERS, ONLINE WEBSITES, ETC.): 
 
@@ -38,4 +39,41 @@ public class Pd5ZacharyWangBXT_Shell {
 		tree.preorderTraverse();
 		System.out.print("\nEvaluates to " + tree.evaluateTree());
 	}
-}
+}/*Example output:
+
+Input postfix string:  2 3 + 5 / 4 5 - *
+			2
+		+
+			3
+	/
+		5
+*
+		4
+	-
+		5
+Infix order:  5-4*5/3+2
+Prefix order:  *-54/5+32
+Evaluates to 1.0
+
+Input postfix string: 1 4 - 5 /
+		1
+	-
+		4
+/
+	5
+Infix order:  5/4-1
+Prefix order:  /5-41
+Evaluates to 1.6666666666666667
+
+Input postfix string: 3 4 5 + *
+	3
+*
+		4
+	+
+		5
+Infix order:  5+4*3
+Prefix order:  *+543
+Evaluates to 27.0
+
+*/
+
